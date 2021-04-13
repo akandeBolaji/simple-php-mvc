@@ -1,6 +1,8 @@
 <?php
 
 use akandebolaji\phpmvc\Application;
+use app\models\User;
+use app\controllers\UserController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
