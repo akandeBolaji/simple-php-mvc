@@ -1,0 +1,17 @@
+{
+    "name": "akandebolaji/simple-mvc",
+    "authors": [
+        {
+            "name": "akandeBolaji",
+            "email": "akandebolajidanielofficial@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "."
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    }
+}
