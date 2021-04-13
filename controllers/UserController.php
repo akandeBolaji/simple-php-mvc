@@ -28,11 +28,18 @@ class UserController extends Controller
     {
             $loginUser = new LoginUser();
             $loginUser->loadData($request->getBody());
-            if ($validate = $loginUser->validate() && $token = $loginUser->login()) {
+            if ($validate = $loginUser->validate() && $user = $loginUser->login()) {
+                
                 return Application::$app->response->json([
                     'message' => "Login Successful",
                     'data' => [
-                        'bearer token' => $token
+                        'Bearer Token' => $user->api_token,
+                        'Expires at' => $user->api_token_expire_at,
+                        'User' => [
+                            'First name' => $user->firstname,
+                            'Last name' => $user->lastname,
+                            'email' => $user->email
+                        ]
                     ]
                 ], 201);
             }
