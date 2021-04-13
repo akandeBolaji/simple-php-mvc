@@ -5,15 +5,18 @@ namespace app\models;
 
 use akandebolaji\phpmvc\DbModel;
 use akandebolaji\phpmvc\UserModel;
+use Carbon\Carbon;
 
 class User extends UserModel
-{
+{ 
     public int $id = 0;
     public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
+    public string $api_token = '';
+    public string $api_token_expire_at = '';
 
     public static function tableName(): string
     {
@@ -22,7 +25,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['firstname', 'lastname', 'email', 'password'];
+        return ['firstname', 'lastname', 'email', 'password', 'api_token', 'api_token_expire_at'];
     }
 
     public function labels(): array
@@ -59,5 +62,18 @@ class User extends UserModel
     public function getDisplayName(): string
     {
         return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public static function rollApiKey()
+    {
+        do {
+            $token = bin2hex(random_bytes(32));
+            $this->api_token = $token;
+            $date = Carbon::now()->addDays(5);
+            $this->api_token_expire_at = $date;
+        } while( self::findOne(['api_token' => $token]) );
+        $this->saveApiToken($this->api_token, $this->api_token_expire_at, )
+
+        return $token;
     }
 }

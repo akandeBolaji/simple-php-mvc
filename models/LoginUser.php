@@ -5,6 +5,7 @@ namespace app\models;
 
 use akandebolaji\phpmvc\Application;
 use akandebolaji\phpmvc\Model;
+use Carbon\Carbon;
 
 class LoginUser extends Model
 {
@@ -39,6 +40,8 @@ class LoginUser extends Model
             return false;
         }
 
-        return Application::$app->login($user);
+        return User::rollApiKey();
+
+        // return Application::$app->login($user);
     }
-}
+} 

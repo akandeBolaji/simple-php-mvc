@@ -26,11 +26,33 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $loginUser = new LoginUser();
-        
-            $loginForm->loadData($request->getBody());
-            if ($loginForm->validate() && $loginForm->login()) {
-                Application::$app->response->redirect('/');
+            $loginUser = new LoginUser();
+            $loginUser->loadData($request->getBody());
+            if ($loginUser->validate() && $token = $loginUser->login()) {
+                Application::$app->response->json([
+                    'message' => "Login Successful",
+                    'data' => [
+                        'bearer token' => $token
+                    ]
+                ], 201);
+                return;
+            }
+            else if (!$loginUser->validate()) {
+                Application::$app->response->json([
+                    'message' => "Login failed",
+                    'data' => [
+                        'errors' => $loginUser->errors
+                    ]
+                ], 400);
+                return;
+            } 
+            else {
+                Application::$app->response->json([
+                    'message' => "Login failed",
+                    'data' => [
+                        'errors' => ['Unable to register at the moment']
+                    ]
+                ], 400);
                 return;
             }
     }
