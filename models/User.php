@@ -3,7 +3,6 @@
 namespace app\models;
 
 
-use akandebolaji\phpmvc\DbModel;
 use akandebolaji\phpmvc\UserModel;
 use Carbon\Carbon;
 
@@ -64,15 +63,15 @@ class User extends UserModel
         return $this->firstname . ' ' . $this->lastname;
     }
 
-    public static function rollApiKey()
+    public function rollApiKey()
     {
         do {
-            $token = bin2hex(random_bytes(32));
+            $token = base64_encode( hash('sha256',time()) . hash('sha256',$_ENV['APP_KEY']) . random_bytes(206) );
             $this->api_token = $token;
             $date = Carbon::now()->addDays(5);
             $this->api_token_expire_at = $date;
         } while( self::findOne(['api_token' => $token]) );
-        $this->saveApiToken($this->api_token, $this->api_token_expire_at, )
+        $this->saveApiToken();
 
         return $token;
     }

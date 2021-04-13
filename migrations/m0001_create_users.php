@@ -13,7 +13,6 @@ class m0001_create_users {
                 password VARCHAR(512) NOT NULL,
                 api_token VARCHAR(512) NULL,
                 api_token_expire_at VARCHAR(512) NULL,
-                status TINYINT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )  ENGINE=INNODB;";
         $db->pdo->exec($SQL);

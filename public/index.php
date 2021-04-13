@@ -22,4 +22,4 @@ $app->router->post('/register', [UserController::class, 'register']);
 $app->router->post('/login', [UserController::class, 'login']);
 $app->router->get('/logout', [UserController::class, 'logout']);
 
-$app->run();
+$app->run(); 

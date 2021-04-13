@@ -28,32 +28,29 @@ class UserController extends Controller
     {
             $loginUser = new LoginUser();
             $loginUser->loadData($request->getBody());
-            if ($loginUser->validate() && $token = $loginUser->login()) {
-                Application::$app->response->json([
+            if ($validate = $loginUser->validate() && $token = $loginUser->login()) {
+                return Application::$app->response->json([
                     'message' => "Login Successful",
                     'data' => [
                         'bearer token' => $token
                     ]
                 ], 201);
-                return;
             }
-            else if (!$loginUser->validate()) {
-                Application::$app->response->json([
+            else if (!$validate) {
+                return Application::$app->response->json([
                     'message' => "Login failed",
                     'data' => [
                         'errors' => $loginUser->errors
                     ]
                 ], 400);
-                return;
             } 
             else {
-                Application::$app->response->json([
+                return Application::$app->response->json([
                     'message' => "Login failed",
                     'data' => [
                         'errors' => ['Unable to register at the moment']
                     ]
                 ], 400);
-                return;
             }
     }
 
@@ -61,13 +58,13 @@ class UserController extends Controller
     {
         $registerModel = new User();
         $registerModel->loadData($request->getBody());
-        if ($registerModel->validate() && $registerModel->save()) {
-            Application::$app->response->json([
+        if ($validate = $registerModel->validate() && $registerModel->save()) {
+            return Application::$app->response->json([
                 'message' => "Register Successful"
             ], 201);
         }
-        else if (!$registerModel->validate()) {
-            Application::$app->response->json([
+        else if (!$validate) {
+            return Application::$app->response->json([
                 'message' => "Register failed",
                 'data' => [
                     'errors' => $registerModel->errors
@@ -75,7 +72,7 @@ class UserController extends Controller
             ], 400);
         } 
         else {
-            Application::$app->response->json([
+           return Application::$app->response->json([
                 'message' => "Register failed",
                 'data' => [
                     'errors' => ['Unable to register at the moment']
