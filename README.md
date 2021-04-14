@@ -23,6 +23,7 @@ Logout > http://127.0.0.1:8080/api/v1/logout
 
 ## POST
 Register > http://127.0.0.1:8080/api/v1/register
+
 Login > http://127.0.0.1:8080/api/v1/login
 ___
 
