@@ -18,8 +18,8 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
-$app->router->post('/register', [UserController::class, 'register']);
-$app->router->post('/login', [UserController::class, 'login']);
-$app->router->get('/logout', [UserController::class, 'logout']);
+$app->router->post('/api/v1/register', [UserController::class, 'register']);
+$app->router->post('/api/v1/login', [UserController::class, 'login']);
+$app->router->get('/api/v1/logout', [UserController::class, 'logout']);
 
 $app->run(); 

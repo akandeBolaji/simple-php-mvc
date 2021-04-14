@@ -14,8 +14,8 @@ class User extends UserModel
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
-    public string $api_token = '';
-    public string $api_token_expire_at = '';
+    public $api_token = '';
+    public $api_token_expire_at = '';
 
     public static function tableName(): string
     {
