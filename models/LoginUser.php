@@ -39,7 +39,5 @@ class LoginUser extends Model
         $user->rollApiKey();
 
         return $user;
-
-        // return Application::$app->login($user);
     }
 } 

@@ -14,6 +14,7 @@ use app\models\{
     User,
     LoginUser
 };
+use app\services\AuthTokenService;
 
 
 class UserController extends Controller
@@ -91,7 +92,25 @@ class UserController extends Controller
 
     public function logout(Request $request, Response $response)
     {
-        Application::$app->logout();
-        $response->redirect('/');
+        $error = [
+            'message' => "Logout failed",
+            'data' => [
+                'errors' => ['Invalid Authorization token']
+            ]
+        ];
+        $api_token = AuthTokenService::getBearerToken();
+        if (!$api_token)
+            return Application::$app->response->json($error, 400);
+
+        $user = User::findOne(['api_token' => $api_token]);
+
+        if (!$user)
+            return Application::$app->response->json($error, 400);
+
+        $user->unRollApiKey();
+
+        return Application::$app->response->json([
+            'message' => "Logout Successful"
+        ], 200);
     }
 }
